@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href= "{% static 'game/indexstyles.css' %} ">
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <h1 class="text-center text-white">PLAY TIC TAC</h1>
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <p{% if message.tags %} class="message {{ message.tags }}"{% endif %}>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form class="form" action="/" method="post">
+            {% csrf_token %}
+            <input type="text" name="player_name" id="player_name" placeholder="Set nickname">
+            <input type="number" name="room_code" id="room_code" placeholder="Enter Room Code (If You Have)">
+            
+            
+            <button id="actionBtn">Create New Room</button>
+        </form>
+    </div>
+
+    <script>
+        const roomNameInp = document.getElementById("room_code")
+        const actionBtn = document.getElementById("actionBtn")
+        roomNameInp.addEventListener('keyup', e => {
+            if (e.currentTarget.value == "") {
+                actionBtn.innerText = "Create New Room"
+            } else {
+                actionBtn.innerText = "Join Game"
+            }
+        })        
+    </script>
+
+
+</body>
+
+</html>
